@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@700&family=Josefin+Sans:wght@300&family=Otomanopee+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/55e82e78c2.js" crossorigin="anonymous"></script>
+    <script src="./Controller/pubsub.js" defer></script>
+    <script src="./Model/product.js" defer></script>
+    <script src="./View/dom_node.js" defer></script>
+    <script src="./View/product_view.js" defer></script>
+    <script src="./View/cart_view.js" defer></script>
+    <script src="./Model/cart.js" defer></script>
+    <script src="./color_change.js" defer></script>
+    <script src="./main.js" defer></script>
+    <title>Open World Game Store</title>
+</head>
+<body>
+    <header>
+        <button id="menu-btn"><i class="fas fa-bars"></i></button>
+        <span id="logo">
+            <h1><span class="logo-open">Open</span><span class="logo-world">World</span></h1>
+            <h2><div>Game Store</div></h2>
+        </span>
+        <button class="cart-btn"><i class='fas fa-shopping-cart'></i></button>
+    </header>
+    <main class="js-main">
+        <div class="title">
+            <h2>PS4 games</h2>
+        </div>
+        <div class="products">
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>

@@ -3,6 +3,7 @@ class CartModel{
         this.productsInCart = [];   
         this.totalAmount;
         PubSub.subscribe('addToCart',(product) => this.addProductsToCart(product));
+        PubSub.subscribe('removeProduct',(productName) => this.removeProduct(productName));
     }
     hasProduct(product){
         return this.productsInCart.hasOwnProperty(product.name);
@@ -18,10 +19,23 @@ class CartModel{
         // 2, Felszorozzuk az alap Product árat a mennyiséggel, ezt átadjuk egy price változónak, majd ezt kerekítjük
         // 3, Átadjuk a piece és price változók értékét a productsInCart tömbben szereplő, aktuálisan megnevezett termék .piece és .price értékének
         const piece = parseInt(this.productsInCart[product.name][0].piece) + 1;
-        let price = product.price * piece;           
-        price = Helper.numberRounding(price);
+        let priceTotal = product.price * piece;           
+        priceTotal = Helper.numberRounding(priceTotal);
         this.productsInCart[product.name][0].piece = piece;
-        this.productsInCart[product.name][0].price = price;
+        this.productsInCart[product.name][0].total = priceTotal;
+        //Frissítjük a CartView-t a CartModel friss adatainak átadásával
+        PubSub.publish('updateCart',this.getProductsInCart());
+        // Total Amount frissítése
+        this.updateTotalAmount();
+        PubSub.publish('updateTotalAmount',this.getTotalAmount());
+    }
+    removeProduct(name){
+        const piece = parseInt(this.productsInCart[name][0].piece) - 1;
+        const price = this.productsInCart[name][0].price;   
+        let total = price * piece;    
+        total = Helper.numberRounding(total);
+        this.productsInCart[name][0].piece = piece;
+        this.productsInCart[name][0].total = total;
         //Frissítjük a CartView-t a CartModel friss adatainak átadásával
         PubSub.publish('updateCart',this.getProductsInCart());
         // Total Amount frissítése
@@ -37,7 +51,7 @@ class CartModel{
     updateTotalAmount(){
         let total = 0;
         for(const product in this.productsInCart){
-            total += this.productsInCart[product][0].price;
+            total += this.productsInCart[product][0].total;
         }
         total = Helper.numberRounding(total);
         this.totalAmount = total;

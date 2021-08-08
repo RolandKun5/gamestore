@@ -14,8 +14,9 @@ class CartView extends DOMNode{
         this.cartTotalAmountElement;
         // Eseménykezelő hozzáadás
         this.cartShowBtnElement.addEventListener('click',this.showCart.bind(this));
-        // Cart frissítésének feliratkozása
+        // Cart és a TotalAmount frissítésének feliratkozása
         PubSub.subscribe('updateCart',(productsInCart) => this.updateCart(productsInCart));
+        PubSub.subscribe('updateTotalAmount',(totalAmount) => this.setTotalAmount(totalAmount));
     }        
     setUp(node){
         // DOM csomópont megadása
@@ -28,7 +29,7 @@ class CartView extends DOMNode{
         this.cartCloseBtnElement.addEventListener('click',this.closeCart.bind(this));
     }   
     setTotalAmount(totalAmount){
-        this.cartTotalAmountElement.textContent = totalAmount;
+        this.cartTotalAmountElement.textContent = '$' + totalAmount;
     }
     showCart(){
         this.node.classList.add('cart-show');
@@ -46,7 +47,7 @@ class CartView extends DOMNode{
                         <img src="${data.src}" alt="${data.name}">
                         <p class="cart-product-title">${data.name}</p>
                         <p class="cart-product-pc">${data.piece} pc</p>
-                        <p class="cart-product-price">${"$ " + data.price}</p>
+                        <p class="cart-product-price">${"$" + data.price}</p>
                         <button class="cart-product-remove"><i class="fas fa-times"></i></button>                
                     `;
                 this.cartMainElement.appendChild(productInCartUI);

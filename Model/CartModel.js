@@ -19,24 +19,27 @@ class CartModel{
         // 3, Átadjuk a piece és price változók értékét a productsInCart tömbben szereplő, aktuálisan megnevezett termék .piece és .price értékének
         const piece = parseInt(this.productsInCart[product.name][0].piece) + 1;
         let price = product.price * piece;           
-        price = Math.round(price * 100) / 100;
+        price = Helper.numberRounding(price);
         this.productsInCart[product.name][0].piece = piece;
         this.productsInCart[product.name][0].price = price;
         //Frissítjük a CartView-t a CartModel friss adatainak átadásával
         PubSub.publish('updateCart',this.getProductsInCart());
         // Total Amount frissítése
-        //this.updateTotalAmount();
+        this.updateTotalAmount();
+        PubSub.publish('updateTotalAmount',this.getTotalAmount());
     }
     getProductsInCart(){
         return this.productsInCart;
     }
-    /*updateTotalAmount(){
+    getTotalAmount(){
+        return this.totalAmount;
+    }
+    updateTotalAmount(){
         let total = 0;
         for(const product in this.productsInCart){
-            console.log(product)
-            total += this.productsInCart[product.price]
+            total += this.productsInCart[product][0].price;
         }
+        total = Helper.numberRounding(total);
         this.totalAmount = total;
-        //console.log(this.totalAmount);
-    }*/
+    }
 };

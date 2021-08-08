@@ -1,4 +1,4 @@
-class DOMNodeView{
+class DOMNode{
     constructor(template,className,containerElement){
         this.frame = template;
         this.className = className;

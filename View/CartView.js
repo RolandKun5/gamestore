@@ -1,4 +1,4 @@
-class CartView extends DOMNodeView{
+class CartView extends DOMNode{
     constructor(template,className,containerElement,cartShowBtn){
         super(template,className,containerElement);
         // DOM csomópont
@@ -37,7 +37,7 @@ class CartView extends DOMNodeView{
         this.node.classList.remove('cart-show');
     }
     updateCart(productsInCart){
-        const spanContainer = document.createElement('span');
+        this.cartMainElement.innerHTML = '';
         for(let product in productsInCart){
             productsInCart[product].forEach((data)=>{
                 const productInCartUI = document.createElement('div');
@@ -49,10 +49,8 @@ class CartView extends DOMNodeView{
                         <p class="cart-product-price">${"$ " + data.price}</p>
                         <button class="cart-product-remove"><i class="fas fa-times"></i></button>                
                     `;
-                spanContainer.appendChild(productInCartUI);
+                this.cartMainElement.appendChild(productInCartUI);
             })
         }     
-        this.cartMainElement.innerHTML = '';
-        this.cartMainElement.appendChild(spanContainer);
     }
 };

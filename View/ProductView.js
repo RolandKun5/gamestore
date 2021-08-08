@@ -1,4 +1,4 @@
-class ProductView extends DOMNodeView{
+class ProductView extends DOMNode{
     constructor(template,className,containerElement){
         super(template,className,containerElement);
         // DOM csomópont

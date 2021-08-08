@@ -7,7 +7,7 @@
             return this.topics.hasOwnProperty(topicName);
         }
         subscribe(topicName,handler){
-            if(!this.hasHandler(topicName)){
+            if(this.hasHandler(topicName) === false){
                 this.topics[topicName] = [];
             }
             this.topics[topicName].push(handler);

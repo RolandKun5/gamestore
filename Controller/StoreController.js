@@ -75,7 +75,7 @@
         dataPackage2: {        
             imgSrc: './images/Marvel-Spider-Man-ps4.jpg',
             name: 'Marvel\'s Spider-Man - PS4',
-            stockState: false,
+            stockState: true,
             price: 19.99,
         },
         dataPackage3: {        

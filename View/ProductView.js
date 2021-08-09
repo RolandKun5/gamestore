@@ -38,7 +38,7 @@ class ProductView extends DOMNode{
         this.productOnStockElement.textContent = state;
     };
     setProductPrice(price){
-        this.productPriceElement.textContent = price;
+        this.productPriceElement.textContent = '$' + price;
         this.productToCartBtnElement.dataset.price = price;
     };
     handleClick(){

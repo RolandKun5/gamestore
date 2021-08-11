@@ -30,17 +30,23 @@ class CartModel{
         PubSub.publish('updateTotalAmount',this.getTotalAmount());
     }
     removeProduct(name){
-        const piece = parseInt(this.productsInCart[name][0].piece) - 1;
-        const price = this.productsInCart[name][0].price;   
-        let total = price * piece;    
-        total = Helper.numberRounding(total);
-        this.productsInCart[name][0].piece = piece;
-        this.productsInCart[name][0].total = total;
-        //Frissítjük a CartView-t a CartModel friss adatainak átadásával
-        PubSub.publish('updateCart',this.getProductsInCart());
-        // Total Amount frissítése
-        this.updateTotalAmount();
-        PubSub.publish('updateTotalAmount',this.getTotalAmount());
+        let piece = parseInt(this.productsInCart[name][0].piece);
+        if(piece > 0){
+            piece -= 1;
+            const price = this.productsInCart[name][0].price;   
+            let total = price * piece;    
+            total = Helper.numberRounding(total);
+            this.productsInCart[name][0].piece = piece;
+            this.productsInCart[name][0].total = total;
+            //Frissítjük a CartView-t a CartModel friss adatainak átadásával
+            PubSub.publish('updateCart',this.getProductsInCart());
+            // Total Amount frissítése
+            this.updateTotalAmount();
+            PubSub.publish('updateTotalAmount',this.getTotalAmount());
+        }
+        if(piece === 0){
+            PubSub.publish('removeProductView',name);            
+        }
     }
     getProductsInCart(){
         return this.productsInCart;

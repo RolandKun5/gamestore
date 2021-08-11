@@ -17,6 +17,8 @@ class CartView extends DOMNode{
         // Cart és a TotalAmount frissítésének feliratkozása
         PubSub.subscribe('updateCart',(productsInCart) => this.updateCart(productsInCart));
         PubSub.subscribe('updateTotalAmount',(totalAmount) => this.setTotalAmount(totalAmount));
+        // ProductView törlésének feliratkozása
+        PubSub.subscribe('removeProductView',(name) => this.removeProductView(name));
     }        
     setUp(node){
         // DOM csomópont megadása
@@ -53,5 +55,13 @@ class CartView extends DOMNode{
                 ProductInCart.setUp(ProductInCart.getNode());
             })
         }     
+    }
+    removeProductView(name){
+        for (let i = 0; i < this.cartMainElement.children.length; i++) {
+            if(name === this.cartMainElement.children[i].firstChild.nextSibling.nextSibling.nextSibling.textContent){
+                const childElement = this.cartMainElement.children[i];
+                this.cartMainElement.removeChild(childElement);
+            }            
+        }
     }
 };

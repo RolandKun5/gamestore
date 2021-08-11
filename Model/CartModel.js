@@ -15,15 +15,15 @@ class CartModel{
             product.piece = 0;
             this.productsInCart[product.name].push(product);
         }
-        // 1, Növeljük a Cart-ban szereplő Product mennyiséget és ezt átadjuk egy piece változónak
-        // 2, Felszorozzuk az alap Product árat a mennyiséggel, ezt átadjuk egy price változónak, majd ezt kerekítjük
-        // 3, Átadjuk a piece és price változók értékét a productsInCart tömbben szereplő, aktuálisan megnevezett termék .piece és .price értékének
+        // Növeljük a Cart-ban szereplő Product mennyiséget és ezt átadjuk egy piece változónak
         const piece = parseInt(this.productsInCart[product.name][0].piece) + 1;
+        // Felszorozzuk az alap Product árat a mennyiséggel, ezt átadjuk egy price változónak, majd ezt kerekítjük
         let priceTotal = product.price * piece;           
         priceTotal = Helper.numberRounding(priceTotal);
+        // Átadjuk a piece és price változók értékét a productsInCart tömbben szereplő, aktuálisan megnevezett termék .piece és .price értékének
         this.productsInCart[product.name][0].piece = piece;
         this.productsInCart[product.name][0].total = priceTotal;
-        //Frissítjük a CartView-t a CartModel friss adatainak átadásával
+        // Frissítjük a CartView-t a CartModel friss adatainak átadásával
         PubSub.publish('updateCart',this.getProductsInCart());
         // Total Amount frissítése
         this.updateTotalAmount();
@@ -38,7 +38,7 @@ class CartModel{
             total = Helper.numberRounding(total);
             this.productsInCart[name][0].piece = piece;
             this.productsInCart[name][0].total = total;
-            //Frissítjük a CartView-t a CartModel friss adatainak átadásával
+            // Frissítjük a CartView-t a CartModel friss adatainak átadásával
             PubSub.publish('updateCart',this.getProductsInCart());
             // Total Amount frissítése
             this.updateTotalAmount();

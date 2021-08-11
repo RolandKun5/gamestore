@@ -43,16 +43,18 @@ class CartView extends DOMNode{
         this.cartMainElement.innerHTML = '';
         for(let product in productsInCart){
             productsInCart[product].forEach((data)=>{
-                const HTMLCode =  `                
+                if(data.piece > 0){
+                    const HTMLCode =  `                
                     <img class="cart-product-img" src="${data.src}" alt="${data.name}">
                     <p class="cart-product-title">${data.name}</p>
                     <p class="cart-product-pc">${data.piece} pc</p>
                     <p class="cart-product-price">${"$" + data.total}</p>
                     <button class="cart-product-remove"><i class="fas fa-times"></i></button>                
-                `;
-                const className = 'product-in-cart';
-                const ProductInCart = new ProductInCartView(HTMLCode,className,this.cartMainElement);
-                ProductInCart.setUp(ProductInCart.getNode());
+                    `;
+                    const className = 'product-in-cart';
+                    const ProductInCart = new ProductInCartView(HTMLCode,className,this.cartMainElement);
+                    ProductInCart.setUp(ProductInCart.getNode());
+                }
             })
         }     
     }

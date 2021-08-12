@@ -32,10 +32,13 @@ class CartModel{
     removeProduct(name){
         let piece = parseInt(this.productsInCart[name][0].piece);
         if(piece > 0){
+            // Csökkentjük a darabszámot
             piece -= 1;
+            // A product price felszorzása a csökkentett darabszámmal + kerekítése
             const price = this.productsInCart[name][0].price;   
             let total = price * piece;    
             total = Helper.numberRounding(total);
+            // Csökkentett darabszám átadása a productInCart tömbben szereplő product-nak
             this.productsInCart[name][0].piece = piece;
             this.productsInCart[name][0].total = total;
             // Frissítjük a CartView-t a CartModel friss adatainak átadásával

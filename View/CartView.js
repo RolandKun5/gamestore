@@ -35,9 +35,11 @@ class CartView extends DOMNode{
     }
     showCart(){
         this.node.classList.add('cart-show');
+        this.node.parentElement.parentElement.parentElement.style.overflow = 'hidden';
     }
     closeCart(){
         this.node.classList.remove('cart-show');
+        this.node.parentElement.parentElement.parentElement.style.overflow = 'auto';
     }
     updateCart(productsInCart){
         this.cartMainElement.innerHTML = '';

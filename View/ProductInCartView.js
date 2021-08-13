@@ -27,5 +27,7 @@ class ProductInCartView extends DOMNode{
     }
     handleRemoveClick(){
         PubSub.publish('removeProduct',this.productInCartTitleElement.textContent)
+        const message = MessageBox.getReasonsAndMessages();
+        PubSub.publish('popUpMessageBox',message.removed);
     }
 }

@@ -44,5 +44,7 @@ class ProductView extends DOMNode{
     handleClick(){
        const product = {...this.dataset};
        PubSub.publish('addToCart',product);
+       const message = MessageBox.getReasonsAndMessages();
+       PubSub.publish('popUpMessageBox',message.added);
     };
 };

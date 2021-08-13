@@ -14,7 +14,8 @@
     --green-color: rgb(79, 255, 93);
     --red-color: rgb(255, 24, 16);
     --yellow-color: rgb(255, 251, 0);
-    --glass-effect-color: rgba(75,75,75,0.20);
+    --glass-effect-color: rgba(75,75,75,.2);
+    --alternative-glass-effect-color: rgba(45,45,45,.9);
     --glass-effect-border-color: rgba(155,155,155,0.18);
 
     --blue-hover-color:rgba(8, 123, 205, 0.432);
@@ -170,7 +171,9 @@ main{
     }
 }
 
-/* PRODUCTS */
+/* ============
+    PRODUCTS 
+ =========== */
 
 .products{
     width: 100%;
@@ -297,7 +300,9 @@ main{
     background-color: var(--blue-hover-color);
 }
 
-/* CART */
+/* =======
+    CART 
+ ======= */
 
 .cart-background{
     visibility: hidden;
@@ -305,7 +310,7 @@ main{
     width: 100%;
     height: 100%;
     background-color: var(--black-with-alpha);
-    z-index: 9999;
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -413,6 +418,40 @@ main{
     color: var(--blue-color);
     text-shadow: var(--blue-shadow);
 }
+
+/* ============
+    MESSAGEBOX 
+ =========== */
+
+ .message-box-background{
+    visibility: hidden;
+    position: fixed;
+    bottom: 1rem;
+    width: 90%;
+    z-index: 11;
+ }
+
+ .message-box-background-show{
+     visibility: visible;
+ }
+
+ .message-box{
+     height: 5rem;
+     width: 100%;
+     padding: 0 .8rem;
+     background-color: var(--alternative-glass-effect-color);
+     border: 0.0625rem solid var(--glass-effect-border-color);
+     border-radius: 0.625rem;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     text-transform: uppercase;
+     color: var(--blue-color);
+     text-shadow: var(--blue-shadow);
+     letter-spacing: 0.0625rem;
+     text-align: center;
+     line-height: 1.6;
+ }
 
 
 /* =========

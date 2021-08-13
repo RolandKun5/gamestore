@@ -5,7 +5,7 @@
             // Termék adatok
             this.productDatas = productDatas;
             // HTML kód sablonok
-            this.cartHTMLTemplate = `
+            this.cartHTMLCode = `
                 <div class="cart-container">
                     <div class="cart-header">
                         <h2 class="cart-title">Cart</h2>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             `;
-            this.productHTMLTemplate = `
+            this.productHTMLCode = `
                 <div class="product-header"><img class="js-product-image" src="" alt="Product Name"></div>
                 <div class="product-info">
                     <h3 class="js-product-name">Product Name</h3>
@@ -30,22 +30,31 @@
                     <button class="btn-to-cart">Add to cart</button>
                 </div>
             `;
+            this.messageBoxHTMLCode = `
+                <div class="message-box">
+                    <h3>Added to cart</h3>
+                </div>
+            `;
             // CSS classok
             this.cartClassName = 'cart-background';
             this.productClassName = 'product-container';
+            this.messageBoxClassName = 'message-box-background';
             // Cart elemek
             this.cartShowBtnElement = document.querySelector('.cart-btn');
-            this.cartContainerElement = document.querySelector('.js-main');
+            this.cartAndMessageBoxContainerElement = document.querySelector('.js-main');
             // Product elem
             this.productContainerElement = document.querySelector('.products');
             // Cart inicializálás
-            this.CartUI = new CartView(this.cartHTMLTemplate,this.cartClassName,this.cartContainerElement,this.cartShowBtnElement);
+            this.CartUI = new CartView(this.cartHTMLCode,this.cartClassName,this.cartAndMessageBoxContainerElement,this.cartShowBtnElement);
             this.CartUI.setUp(this.CartUI.getNode());
             this.Cart = new CartModel();
             // Product inicializálás
             for(let dataPackage in this.productDatas){
                 this.#initProduct(dataPackage);
             };  
+            // MessageBox inicializálás
+            this.MessageBoxView = new MessageBoxView(this.messageBoxHTMLCode,this.messageBoxClassName,this.cartAndMessageBoxContainerElement);    
+            this.MessageBoxView.setUp(this.MessageBoxView.getNode());
         }
         // Privát product inicializáló metódus
         #initProduct(dataPackage){
@@ -54,7 +63,7 @@
             const name = NewProduct.getName();
             const stockState = NewProduct.getStockState();
             const price = NewProduct.getPrice();
-            const NewProductUI = new ProductView(this.productHTMLTemplate,this.productClassName,this.productContainerElement);
+            const NewProductUI = new ProductView(this.productHTMLCode,this.productClassName,this.productContainerElement);
             const node = NewProductUI.getNode();
             NewProductUI.setUp(node);
             NewProductUI.setProductImage(src);

@@ -50,14 +50,14 @@
             this.Cart = new CartModel();
             // Product inicializálás
             for(let dataPackage in this.productDatas){
-                this.#initProduct(dataPackage);
+                this.initProduct(dataPackage);
             };  
             // MessageBox inicializálás
             this.MessageBoxView = new MessageBoxView(this.messageBoxHTMLCode,this.messageBoxClassName,this.cartAndMessageBoxContainerElement);    
             this.MessageBoxView.setUp(this.MessageBoxView.getNode());
         }
         // Privát product inicializáló metódus
-        #initProduct(dataPackage){
+        initProduct(dataPackage){
             const NewProduct = new ProductModel(productDatas[dataPackage]);
             const src = NewProduct.getImgSrc();
             const name = NewProduct.getName();

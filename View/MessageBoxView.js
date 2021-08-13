@@ -5,22 +5,22 @@ class MessageBoxView extends DOMNode{
         this.node;
         this.opacity = 1;
     }
-    #setOpacity(opacity){        
+    setOpacity(opacity){        
         this.node.style.opacity = opacity;
     }
-    #changeOpacity(){
+    changeOpacity(){
         if(this.opacity > 0){
             this.opacity -= .1;
             setTimeout(()=>{
-                this.#changeOpacity();
+                this.changeOpacity();
             },70);
         }else{
-            this.#disappear();
+            this.disappear();
         }      
-        this.#setOpacity(this.opacity);
+        this.setOpacity(this.opacity);
     }
-    #disappear(){
-        this.#setOpacity(this.opacity);
+    disappear(){
+        this.setOpacity(this.opacity);
         this.node.classList.remove('message-box-background-show');
     }
     setUp(node){
@@ -28,11 +28,11 @@ class MessageBoxView extends DOMNode{
     }
     popUp(message){
         this.opacity = 1;
-        this.#setOpacity(this.opacity);
+        this.setOpacity(this.opacity);
         this.node.classList.add('message-box-background-show');
         this.node.firstElementChild.firstElementChild.textContent = message;
         setTimeout(()=>{
-            this.#changeOpacity();
+            this.changeOpacity();
         },1000);
     }
 }

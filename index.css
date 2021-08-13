@@ -322,7 +322,7 @@ main{
 
 .cart-container{
     width: 93%;
-    height: 80%;
+    height: 85%;
     background-color: var(--alternative-black-color);
     box-shadow: var(--black-shadow);
     border-radius: .4rem;
@@ -402,6 +402,7 @@ main{
 .cart-footer{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
 .total-p{
@@ -438,7 +439,7 @@ main{
  .message-box{
      height: 5rem;
      width: 100%;
-     padding: 0 .8rem;
+     padding: .3rem .8rem;
      background-color: var(--alternative-glass-effect-color);
      border: 0.0625rem solid var(--glass-effect-border-color);
      border-radius: 0.625rem;

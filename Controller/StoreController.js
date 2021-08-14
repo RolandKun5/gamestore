@@ -17,6 +17,7 @@
                         <p class="total-p">Total:</p>
                         <p class="total-amount">$ 0</p>
                     </div>
+                    <button class="cart-purchase-btn">Purchase</button>
                 </div>
             `;
             this.productHTMLCode = `

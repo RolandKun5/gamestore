@@ -1,38 +1,44 @@
 class MessageBoxView extends DOMNode{
-    constructor(HTMLCode,className,containerElement){
-        super(HTMLCode,className,containerElement);
+    constructor(htmlCode,className,parentElement){
+        super(htmlCode,className,parentElement);
+        this.opacity = 1;
         PubSub.subscribe('popUpMessageBox',(message) => this.popUp(message));
-        this.node;
+    }
+    // Privát metódusok
+    _resetOpacity(){
         this.opacity = 1;
     }
-    setOpacity(opacity){        
-        this.node.style.opacity = opacity;
+    _setNodeElementOpacity(){        
+        this.node.style.opacity = this.opacity;
     }
-    changeOpacity(){
+    _addCSSClass(){
+        this.node.classList.add('message-box-background-show');
+    }
+    _removeCSSClass(){
+        this.node.classList.remove('message-box-background-show');
+    }
+    _setTextContent(message){
+        this.node.firstElementChild.firstElementChild.textContent = message;
+    }
+    _changeOpacity(){
         if(this.opacity > 0){
             this.opacity -= .1;
             setTimeout(()=>{
-                this.changeOpacity();
+                this._changeOpacity();
             },70);
         }else{
-            this.disappear();
+            this._removeCSSClass();
         }      
-        this.setOpacity(this.opacity);
+        this._setNodeElementOpacity();
     }
-    disappear(){
-        this.setOpacity(this.opacity);
-        this.node.classList.remove('message-box-background-show');
-    }
-    setUp(node){
-        this.node = node;
-    }
+    // Publikus metódus
     popUp(message){
-        this.opacity = 1;
-        this.setOpacity(this.opacity);
-        this.node.classList.add('message-box-background-show');
-        this.node.firstElementChild.firstElementChild.textContent = message;
+        this._resetOpacity();
+        this._setNodeElementOpacity();
+        this._addCSSClass();
+        this._setTextContent(message);
         setTimeout(()=>{
-            this.changeOpacity();
+            this._changeOpacity();
         },1000);
     }
 }

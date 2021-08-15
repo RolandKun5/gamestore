@@ -1,48 +1,39 @@
 class CartView extends DOMNode{
-    constructor(template,className,containerElement,cartShowBtn){
-        super(template,className,containerElement);
-        // DOM csomópont
-        this.node;
+    constructor(htmlCode,className,parentElement,cartShowBtn){
+        super(htmlCode,className,parentElement);
         // Szelektorok
         this.cartCloseBtnSelector = '.cart-close-btn';
         this.cartMainSelector = '.cart-main';
         this.cartTotalAmountSelector = '.total-amount';
         // HTML elemek
         this.cartShowBtnElement = cartShowBtn;
-        this.cartCloseBtnElement;
-        this.cartMainElement;
-        this.cartTotalAmountElement;
-        // Eseménykezelő hozzáadás
-        this.cartShowBtnElement.addEventListener('click',this.showCart.bind(this));
-        // Cart és a TotalAmount frissítésének feliratkozása
-        PubSub.subscribe('updateCart',(productsInCart) => this.updateCart(productsInCart));
-        PubSub.subscribe('updateTotalAmount',(totalAmount) => this.setTotalAmount(totalAmount));
-        // ProductView törlésének feliratkozása
-        PubSub.subscribe('removeProductView',(name) => this.removeProductView(name));
-    }        
-    setUp(node){
-        // DOM csomópont megadása
-        this.node = node;
-        // HTML elemek kiszelektálása
         this.cartCloseBtnElement = this.node.querySelector(this.cartCloseBtnSelector);
         this.cartMainElement = this.node.querySelector(this.cartMainSelector);
         this.cartTotalAmountElement = this.node.querySelector(this.cartTotalAmountSelector);
-        // Eseménykezelő hozzáadása
+        // Eseménykezelők hozzáadása
+        this.cartShowBtnElement.addEventListener('click',this.showCart.bind(this));
         this.cartCloseBtnElement.addEventListener('click',this.closeCart.bind(this));
-    }   
-    setTotalAmount(totalAmount){
-        this.cartTotalAmountElement.textContent = '$' + totalAmount;
-    }
-    showCart(){
+        // Cart és a TotalAmount frissítésének feliratkozása
+        PubSub.subscribe('updateCart',(productsInCart) => this.updateCart(productsInCart));
+        PubSub.subscribe('updateTotalAmount',(totalAmount) => this.updateTotalAmount(totalAmount));
+    }    
+    // Privát metódusok
+    _addCSSClass(){
         this.node.classList.add('cart-show');
-        this.node.parentElement.parentElement.parentElement.style.overflow = 'hidden';
     }
-    closeCart(){
-        this.node.classList.remove('cart-show');
-        this.node.parentElement.parentElement.parentElement.style.overflow = 'auto';
+    _removeCSSClass(){
+        this.node.classList.remove('cart-show');        
     }
-    updateCart(productsInCart){
-        this.cartMainElement.innerHTML = '';
+    _setBodyOverflowToHidden(){
+        this.node.parentElement.parentElement.style.overflow = 'hidden';
+    }
+    _setBodyOverflowToAuto(){
+        this.node.parentElement.parentElement.style.overflow = 'auto';        
+    }
+    _eraseElementContent(element){
+        element.innerHTML = '';
+    }
+    _uploadCart(productsInCart){
         for(let product in productsInCart){
             productsInCart[product].forEach((data)=>{
                 if(data.piece > 0){
@@ -55,17 +46,24 @@ class CartView extends DOMNode{
                     `;
                     const className = 'product-in-cart';
                     const ProductInCart = new ProductInCartView(HTMLCode,className,this.cartMainElement);
-                    ProductInCart.setUp(ProductInCart.getNode());
                 }
             })
-        }     
+        }   
     }
-    removeProductView(name){
-        for (let i = 0; i < this.cartMainElement.children.length; i++) {
-            if(name === this.cartMainElement.children[i].firstChild.nextSibling.nextSibling.nextSibling.textContent){
-                const childElement = this.cartMainElement.children[i];
-                this.cartMainElement.removeChild(childElement);
-            }            
-        }
+    // Publikus metódusok
+    updateTotalAmount(totalAmount){
+        this.cartTotalAmountElement.textContent = '$' + totalAmount;
+    }
+    showCart(){
+        this._addCSSClass();
+        this._setBodyOverflowToHidden();
+    }
+    closeCart(){
+        this._removeCSSClass();
+        this._setBodyOverflowToAuto();
+    }
+    updateCart(productsInCart){
+        this._eraseElementContent(this.cartMainElement);
+        this._uploadCart(productsInCart);
     }
 };

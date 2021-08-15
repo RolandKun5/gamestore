@@ -1,15 +1,12 @@
 class DOMNode{
-    constructor(template,className,containerElement){
-        this.frame = template;
+    constructor(htmlCode,className,parentElement){
+        this.htmlCode = htmlCode;
         this.className = className;
-        this.frameContainer = document.createElement('div');
-        this.frameContainer.innerHTML = this.frame;
-        this.frameContainer.classList.add(this.className);
-        this.containerElement = containerElement;
-        this.containerElement.appendChild(this.frameContainer);
-    };
-    getNode(){
-        return this.frameContainer;
+        this.node = document.createElement('div');
+        this.node.innerHTML = this.htmlCode;
+        this.node.classList.add(this.className);
+        this.parentElement = parentElement;
+        this.parentElement.appendChild(this.node);
     };
 };
 

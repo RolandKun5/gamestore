@@ -1,68 +1,72 @@
 class CartModel{
     constructor(){
-        this.productsInCart = [];   
-        this.totalAmount;
-        PubSub.subscribe('addToCart',(product) => this.addProductsToCart(product));
-        PubSub.subscribe('removeProduct',(productName) => this.removeProduct(productName));
+        this.cart = [];   
+        this.cartTotalAmount;
+        PubSub.subscribe('addToCart',(product) => this.displayProductInCart(product));
+        PubSub.subscribe('removeProductFromCart',(productName) => this.removeProductFromCart(productName));
     }
-    hasProduct(product){
-        return this.productsInCart.hasOwnProperty(product.name);
+    // Privát metódusok
+    _hasProduct(product){
+        return this.cart.hasOwnProperty(product.name);
     }
-    addProductsToCart(product){   
-        // Ha az adott Product még nincs a Cart productsInCart tömbjéhez adva, akkor először hozzáadjuk:
-        if(this.hasProduct(product) === false){
-            this.productsInCart[product.name] = [];
-            product.piece = 0;
-            this.productsInCart[product.name].push(product);
+    _addToCartArray(product){
+        this.cart[product.name] = [];
+        product.piece = 0;
+        this.cart[product.name].push(product);
+    }
+    _checker(product){ 
+        if(this._hasProduct(product) === false){
+            this._addToCartArray(product);
         }
-        // Növeljük a Cart-ban szereplő Product mennyiséget és ezt átadjuk egy piece változónak
-        const piece = parseInt(this.productsInCart[product.name][0].piece) + 1;
-        // Felszorozzuk az alap Product árat a mennyiséggel, ezt átadjuk egy price változónak, majd ezt kerekítjük
-        let priceTotal = product.price * piece;           
-        priceTotal = Helper.numberRounding(priceTotal);
-        // Átadjuk a piece és price változók értékét a productsInCart tömbben szereplő, aktuálisan megnevezett termék .piece és .price értékének
-        this.productsInCart[product.name][0].piece = piece;
-        this.productsInCart[product.name][0].total = priceTotal;
-        // Frissítjük a CartView-t a CartModel friss adatainak átadásával
-        PubSub.publish('updateCart',this.getProductsInCart());
-        // Total Amount frissítése
-        this.updateTotalAmount();
-        PubSub.publish('updateTotalAmount',this.getTotalAmount());
     }
-    removeProduct(name){
-        let piece = parseInt(this.productsInCart[name][0].piece);
+    _increasePieces(product){
+        const piece = parseInt(this.cart[product.name][0].piece) + 1;
+        this.cart[product.name][0].piece = piece;
+    }
+    _decreasedPieces(name){
+        const piece = parseInt(this.cart[name][0].piece) - 1;
+        this.cart[name][0].piece = piece;
+    }
+    _calculateProductTotal(product){
+        const piece = this.cart[product.name][0].piece;
+        const price = this.cart[product.name][0].price
+        const priceTotal = Helper.numberRounding(price * piece);  
+        this.cart[product.name][0].total = priceTotal;
+    }
+    _updateCartView(){
+        PubSub.publish('updateCart',this.cart);
+    }
+    _calculateCartTotal(){
+        let total = 0;
+        for(const product in this.cart){
+            total += this.cart[product][0].total;
+        }
+        total = Helper.numberRounding(total);
+        this.cartTotalAmount = total;
+    }
+    _updateCartTotalAmountView(){
+        PubSub.publish('updateTotalAmount',this.cartTotalAmount);
+    }
+    _updaterMethods(product){
+        this._calculateProductTotal(product);
+        this._updateCartView();
+        this._calculateCartTotal();
+        this._updateCartTotalAmountView();
+    }
+    // Publikos metódusok
+    displayProductInCart(product){   
+        this._checker(product);
+        this._increasePieces(product);
+        this._updaterMethods(product);
+    }
+    removeProductFromCart(name){
+        const piece = parseInt(this.cart[name][0].piece);
         if(piece > 0){
-            // Csökkentjük a darabszámot
-            piece -= 1;
-            // A product price felszorzása a csökkentett darabszámmal + kerekítése
-            const price = this.productsInCart[name][0].price;   
-            let total = price * piece;    
-            total = Helper.numberRounding(total);
-            // Csökkentett darabszám átadása a productInCart tömbben szereplő product-nak
-            this.productsInCart[name][0].piece = piece;
-            this.productsInCart[name][0].total = total;
-            // Frissítjük a CartView-t a CartModel friss adatainak átadásával
-            PubSub.publish('updateCart',this.getProductsInCart());
-            // Total Amount frissítése
-            this.updateTotalAmount();
-            PubSub.publish('updateTotalAmount',this.getTotalAmount());
-        }
-        if(piece === 0){
-            PubSub.publish('removeProductView',name);            
+            this._decreasedPieces(name);
+            this._updaterMethods(this.cart[name][0]);
         }
     }
     getProductsInCart(){
-        return this.productsInCart;
-    }
-    getTotalAmount(){
-        return this.totalAmount;
-    }
-    updateTotalAmount(){
-        let total = 0;
-        for(const product in this.productsInCart){
-            total += this.productsInCart[product][0].total;
-        }
-        total = Helper.numberRounding(total);
-        this.totalAmount = total;
+        return this.cart;
     }
 };

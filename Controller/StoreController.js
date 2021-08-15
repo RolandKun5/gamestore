@@ -4,7 +4,7 @@
         constructor(productDatas){
             // Termék adatok
             this.productDatas = productDatas;
-            // HTML kód sablonok
+            // HTML kódok
             this.cartHTMLCode = `
                 <div class="cart-container">
                     <div class="cart-header">
@@ -40,37 +40,36 @@
             this.cartClassName = 'cart-background';
             this.productClassName = 'product-container';
             this.messageBoxClassName = 'message-box-background';
-            // Cart elemek
+            // HTML elemek a Cart, MessageBox és Product osztály példányosításához
             this.cartShowBtnElement = document.querySelector('.cart-btn');
             this.cartAndMessageBoxContainerElement = document.querySelector('.js-main');
-            // Product elem
             this.productContainerElement = document.querySelector('.products');
-            // Cart inicializálás
-            this.CartUI = new CartView(this.cartHTMLCode,this.cartClassName,this.cartAndMessageBoxContainerElement,this.cartShowBtnElement);
-            this.CartUI.setUp(this.CartUI.getNode());
-            this.Cart = new CartModel();
-            // Product inicializálás
+            // Cart osztály példányosítása
+            this.CartView = new CartView(this.cartHTMLCode,this.cartClassName,this.cartAndMessageBoxContainerElement,this.cartShowBtnElement);
+            this.CartModel = new CartModel();
+            // Product osztály példányosítása
             for(let dataPackage in this.productDatas){
-                this.initProduct(dataPackage);
+                this._initProduct(dataPackage);
             };  
-            // MessageBox inicializálás
+            // MessageBox osztály példányosítása
             this.MessageBoxView = new MessageBoxView(this.messageBoxHTMLCode,this.messageBoxClassName,this.cartAndMessageBoxContainerElement);    
-            this.MessageBoxView.setUp(this.MessageBoxView.getNode());
         }
-        // Privát product inicializáló metódus
-        initProduct(dataPackage){
-            const NewProduct = new ProductModel(productDatas[dataPackage]);
-            const src = NewProduct.getImgSrc();
-            const name = NewProduct.getName();
-            const stockState = NewProduct.getStockState();
-            const price = NewProduct.getPrice();
-            const NewProductUI = new ProductView(this.productHTMLCode,this.productClassName,this.productContainerElement);
-            const node = NewProductUI.getNode();
-            NewProductUI.setUp(node);
-            NewProductUI.setProductImage(src);
-            NewProductUI.setProductName(name);
-            NewProductUI.setProductStockState(stockState);
-            NewProductUI.setProductPrice(price);        
+        // Privát metódus
+        _initProduct(dataPackage){
+            // Product Model példányosítás
+            const NewProductModel = new ProductModel(productDatas[dataPackage]);
+            // Product Model adatainak kiszedése
+            const src = NewProductModel.getImgSrc();
+            const name = NewProductModel.getName();
+            const stockState = NewProductModel.getStockState();
+            const price = NewProductModel.getPrice();
+            // Product View példányosítás
+            const NewProductView = new ProductView(this.productHTMLCode,this.productClassName,this.productContainerElement);
+            NewProductView.setProductImage(src);
+            NewProductView.setProductName(name);
+            NewProductView.setProductStockState(stockState);
+            NewProductView.setProductPrice(price);      
+            NewProductView.uploadDataset();
         }
     }
     
@@ -105,6 +104,18 @@
             name: 'Assassin\'s Creed: Valhalla - PS4',
             stockState: true,
             price: 59.99,
+        },
+        dataPackage6: {
+            imgSrc: './images/Bloodborne-ps4.jpg',
+            name: 'Bloodborne - PS4',
+            stockState: true,
+            price: 9.99,
+        },
+        dataPackage7: {
+            imgSrc: './images/Watch-Dogs-Legion-ps4.jpg',
+            name: 'Watch Dogs Legion - PS4',
+            stockState: true,
+            price: 49.99,
         },
     };
     

@@ -1,22 +1,18 @@
 class ProductView extends DOMNode{
     constructor(htmlCode,className,parentElement){
         super(htmlCode,className,parentElement);
-        // Szelektorok
         this.productImageSelector = '.js-product-image';
         this.productNameSelector = '.js-product-name';
         this.productOnStockSelector = '.on-stock';
         this.productPriceSelector = '.price';
         this.productToCartBtnSelector = '.btn-to-cart';
-        // HTML elemek
         this.productImageElement = this.node.querySelector(this.productImageSelector);
         this.productNameElement = this.node.querySelector(this.productNameSelector);
         this.productOnStockElement = this.node.querySelector(this.productOnStockSelector);
         this.productPriceElement = this.node.querySelector(this.productPriceSelector);
         this.productToCartBtnElement = this.node.querySelector(this.productToCartBtnSelector);
-        // Event Listener hozzáadás
         this.productToCartBtnElement.addEventListener('click',this.handleClick.bind(this));
     }   
-    // Privát metódusok
     _productAddToCart(){
         const product = {...this.productToCartBtnElement.dataset};
         PubSub.publish('addToCart',product);
@@ -25,7 +21,7 @@ class ProductView extends DOMNode{
         const message = MessageBox.getReasonsAndMessages();
         PubSub.publish('popUpMessageBox',message.added);
     }
-    // Publikus metódusok
+
     setProductImage(src){
         this.productImageElement.src = src;
     }

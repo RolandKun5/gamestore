@@ -4,7 +4,6 @@ class MessageBoxView extends DOMNode{
         this.opacity = 1;
         PubSub.subscribe('popUpMessageBox',(message) => this.popUp(message));
     }
-    // Privát metódusok
     _resetOpacity(){
         this.opacity = 1;
     }
@@ -31,7 +30,7 @@ class MessageBoxView extends DOMNode{
         }      
         this._setNodeElementOpacity();
     }
-    // Publikus metódus
+
     popUp(message){
         this._resetOpacity();
         this._setNodeElementOpacity();

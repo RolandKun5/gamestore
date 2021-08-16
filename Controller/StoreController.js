@@ -1,10 +1,7 @@
 (function(){
-    // Store Controller class
     class StoreController{
         constructor(productDatas){
-            // Termék adatok
             this.productDatas = productDatas;
-            // HTML kódok
             this.cartHTMLCode = `
                 <div class="cart-container">
                     <div class="cart-header">
@@ -36,34 +33,25 @@
                     <h3>Added to cart</h3>
                 </div>
             `;
-            // CSS classok
             this.cartClassName = 'cart-background';
             this.productClassName = 'product-container';
             this.messageBoxClassName = 'message-box-background';
-            // HTML elemek a Cart, MessageBox és Product osztály példányosításához
             this.cartShowBtnElement = document.querySelector('.cart-btn');
             this.cartAndMessageBoxContainerElement = document.querySelector('.js-main');
             this.productContainerElement = document.querySelector('.products');
-            // Cart osztály példányosítása
             this.CartView = new CartView(this.cartHTMLCode,this.cartClassName,this.cartAndMessageBoxContainerElement,this.cartShowBtnElement);
             this.CartModel = new CartModel();
-            // Product osztály példányosítása
             for(let dataPackage in this.productDatas){
                 this._initProduct(dataPackage);
             };  
-            // MessageBox osztály példányosítása
             this.MessageBoxView = new MessageBoxView(this.messageBoxHTMLCode,this.messageBoxClassName,this.cartAndMessageBoxContainerElement);    
         }
-        // Privát metódus
         _initProduct(dataPackage){
-            // Product Model példányosítás
             const NewProductModel = new ProductModel(productDatas[dataPackage]);
-            // Product Model adatainak kiszedése
             const src = NewProductModel.getImgSrc();
             const name = NewProductModel.getName();
             const stockState = NewProductModel.getStockState();
             const price = NewProductModel.getPrice();
-            // Product View példányosítás
             const NewProductView = new ProductView(this.productHTMLCode,this.productClassName,this.productContainerElement);
             NewProductView.setProductImage(src);
             NewProductView.setProductName(name);
@@ -73,7 +61,6 @@
         }
     }
     
-    // Termék adatok
     const productDatas = {
         dataPackage1: {
             imgSrc: './images/Spider-Man-Miles-Morales-ps4.jpg',

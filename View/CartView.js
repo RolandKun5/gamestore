@@ -1,23 +1,18 @@
 class CartView extends DOMNode{
     constructor(htmlCode,className,parentElement,cartShowBtn){
         super(htmlCode,className,parentElement);
-        // Szelektorok
         this.cartCloseBtnSelector = '.cart-close-btn';
         this.cartMainSelector = '.cart-main';
         this.cartTotalAmountSelector = '.total-amount';
-        // HTML elemek
         this.cartShowBtnElement = cartShowBtn;
         this.cartCloseBtnElement = this.node.querySelector(this.cartCloseBtnSelector);
         this.cartMainElement = this.node.querySelector(this.cartMainSelector);
         this.cartTotalAmountElement = this.node.querySelector(this.cartTotalAmountSelector);
-        // Eseménykezelők hozzáadása
         this.cartShowBtnElement.addEventListener('click',this.showCart.bind(this));
         this.cartCloseBtnElement.addEventListener('click',this.closeCart.bind(this));
-        // Cart és a TotalAmount frissítésének feliratkozása
         PubSub.subscribe('updateCart',(productsInCart) => this.updateCart(productsInCart));
         PubSub.subscribe('updateTotalAmount',(totalAmount) => this.updateTotalAmount(totalAmount));
     }    
-    // Privát metódusok
     _addCSSClass(){
         this.node.classList.add('cart-show');
     }
@@ -50,7 +45,7 @@ class CartView extends DOMNode{
             })
         }   
     }
-    // Publikus metódusok
+
     updateTotalAmount(totalAmount){
         this.cartTotalAmountElement.textContent = '$' + totalAmount;
     }

@@ -5,7 +5,6 @@ class CartModel{
         PubSub.subscribe('addToCart',(product) => this.displayProductInCart(product));
         PubSub.subscribe('removeProductFromCart',(productName) => this.removeProductFromCart(productName));
     }
-    // Privát metódusok
     _hasProduct(product){
         return this.cart.hasOwnProperty(product.name);
     }
@@ -53,7 +52,7 @@ class CartModel{
         this._calculateCartTotal();
         this._updateCartTotalAmountView();
     }
-    // Publikos metódusok
+
     displayProductInCart(product){   
         this._checker(product);
         this._increasePieces(product);

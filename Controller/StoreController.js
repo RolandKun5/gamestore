@@ -45,6 +45,8 @@
                 this._initProduct(dataPackage);
             };  
             this.MessageBoxView = new MessageBoxView(this.messageBoxHTMLCode,this.messageBoxClassName,this.cartAndMessageBoxContainerElement);    
+            this.ColorChangingLedElements = new ColorChangingLedElementsView();
+            this.ColorChangingLedElements.startColorChangeLoop();
         }
         _initProduct(dataPackage){
             const NewProductModel = new ProductModel(productDatas[dataPackage]);

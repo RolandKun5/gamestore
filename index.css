@@ -26,8 +26,8 @@
     --black-shadow: 0 0 .9rem var(--black-color);
     --black-shadow-img: 0 0 1.5rem black;
     --white-shadow: 0 0 .7rem var(--white-color);
-    --pink-shadow: 0 0 .7rem var(--pink-color);
-    --blue-shadow: 0 0 .7rem var(--blue-color);
+    --pink-shadow: 0 0 .9rem var(--pink-color),0 0 .9rem var(--pink-color);
+    --blue-shadow: 0 0 .9rem var(--blue-color),0 0 .9rem var(--blue-color);
     --green-shadow: 0 0 .7rem var(--green-color);
     --red-shadow:  0 0 .7rem var(--red-color);
     --yellow-shadow: 0 0 .7rem var(--yellow-color);
@@ -79,42 +79,42 @@ header{
     position: fixed;
 }
 
-#menu-btn,.cart-btn{
+.menu-btn,.cart-btn{
     background-color: transparent;
     border: none;
 }
 
-#menu-btn i, .cart-btn i{    
+.menu-btn i, .cart-btn i{    
     font-size: 2rem;
 }
 
-#menu-btn i,.logo-open{
-    color: var(--pink-color);
+.menu-btn i,.logo-open{
+    color: var(--white-color);
     text-shadow: var(--pink-shadow);
 }
 
 .cart-btn i,.logo-world{
-    color: var(--blue-color);
+    color: var(--white-color);
     text-shadow: var(--blue-shadow);
 }
 
-#logo{
+.logo{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#logo h1{
+.logo h1{
     font-size: 2.2rem;
 }
 
-#logo h2{
+.logo h2{
     font-size: 1.2rem;
     color: var(--black-color);
 }
 
-#logo h2 div{
-    background-color: var(--blue-color);
+.logo h2 div{
+    background-color: var(--white-color);
     box-shadow: var(--blue-shadow);
     padding: .3rem;
     margin-top: .6rem;
@@ -134,7 +134,7 @@ header{
 /* PC VERSION */
 
 @media (min-width: 992px){
-    #menu-btn i:hover,.cart-btn i:hover{
+    .menu-btn i:hover,.cart-btn i:hover{
         cursor: pointer;
     }
 }
@@ -312,7 +312,7 @@ main{
 }
 
 .price{
-    color: var(--pink-color);
+    color: var(--white-color);
     text-shadow: var(--pink-shadow);
     font-size: 1.5rem;
     font-weight: 600;
@@ -329,7 +329,7 @@ main{
 }
 
 .btn-to-cart{
-    background-color: var(--blue-color);
+    background-color: var(--white-color);
     box-shadow: var(--blue-shadow);
 }
 
@@ -407,7 +407,7 @@ main{
 
 .cart-close-btn i{
     font-size: 2rem;
-    color: var(--blue-color);
+    color: var(--white-color);
     text-shadow: var(--blue-shadow);
 }
 
@@ -482,14 +482,14 @@ main{
     font-size: 1.3rem;
     text-transform: uppercase;
     font-weight: 600;
-    color: var(--pink-color);
+    color: var(--white-color);
     text-shadow: var(--pink-shadow);
 }
 
 .total-amount{
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--blue-color);
+    color: var(--white-color);
     text-shadow: var(--blue-shadow);
 }
 
@@ -504,7 +504,7 @@ main{
     color: var(--alternative-black-color);
     font-weight: 600;
     font-size: 1rem;
-    background-color: var(--blue-color);
+    background-color: var(--white-color);
     box-shadow: var(--blue-shadow);
 }
 
@@ -542,7 +542,7 @@ main{
      justify-content: center;
      align-items: center;
      text-transform: uppercase;
-     color: var(--blue-color);
+     color: var(--white-color);
      text-shadow: var(--blue-shadow);
      letter-spacing: 0.0625rem;
      text-align: center;
